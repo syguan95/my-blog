@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { SECURE_CODE, EXPIRE_TIME } = require("../config");
+const { SECURE_CODE, EXPIRE_TIME, API_VERSION } = require("../config");
 
 const getToken = (payload) => {
   return jwt.sign(payload, SECURE_CODE, { expiresIn: EXPIRE_TIME });
@@ -11,17 +11,22 @@ const checkToken = (token) => {
 
 const getOperation = (url, method) => {
   console.log(url, method)
+  url = url.split("?")[0];
   var operation = "";
-  if (url === "/article" && method === "GET") {
+  if (url === API_VERSION + "/article" && method === "GET") {
     operation = "GET_ARTICLE_DETAIL";
-  } else if (url === "/article" && method === "POST") {
+  } else if (url === API_VERSION + "/article" && method === "POST") {
     operation = "ADD_ARTICLE";
-  } else if (url === "/article" && method === "PUT") {
+  } else if (url === API_VERSION + "/article" && method === "PUT") {
     operation = "EDIT_ARTICLE";
-  } else if (url === "/article" && method === "DELETE") {
+  } else if (url === API_VERSION + "/article" && method === "DELETE") {
     operation = "DELETE_ARTICLE";
-  } else if (url === "/articleList" && method === "GET") {
+  } else if (url === API_VERSION + "/articleList" && method === "GET") {
     operation = "GET_ARTICLE_LIST";
+  } else if (url === API_VERSION + "/userList" && method === "GET") {
+    operation = "GET_USER_LIST";
+  } else if (url === API_VERSION + "/user/available" && method === "PUT") {
+    operation = "UPDATE_USER_AVAILABLE";
   }
   return operation;
 };

@@ -36,20 +36,22 @@ const addArticle = async (ctx) => {
             transaction: transaction,
           });
 
-          insertTagsSQL = insertTagsSQL + ctx.request.body.tags.map((element) => {
-            return `('${element}',${articleId})`;
-          }).join(",");
-
-          insertCategorysSQL = insertCategorysSQL + ctx.request.body.categorys.map((element) => {
-            return `('${element}',${articleId})`;
-          }).join(",");
-
-          await sequelize.query(insertTagsSQL, {  //插入tag
-            transaction: transaction,
-          });
-          await sequelize.query(insertCategorysSQL, {   //插入category
-            transaction: transaction,
-          });
+          if (ctx.request.body.tags.length > 0) {
+            insertTagsSQL = insertTagsSQL + ctx.request.body.tags.map((element) => {
+              return `('${element}',${articleId})`;
+            }).join(",");
+            await sequelize.query(insertTagsSQL, {  //插入tag
+              transaction: transaction,
+            });
+          }
+          if (ctx.request.body.categorys.length > 0) {
+            insertCategorysSQL = insertCategorysSQL + ctx.request.body.categorys.map((element) => {
+              return `('${element}',${articleId})`;
+            }).join(",");
+            await sequelize.query(insertCategorysSQL, {   //插入category
+              transaction: transaction,
+            });
+          }
         });
 
         ctx.status = 200;
@@ -243,14 +245,14 @@ const getArticleList = async (ctx) => {
   if (isVerified) {
     const getArticleNumberSQL = `SELECT COUNT(*) AS count FROM article`;
 
-    const pageSize = 10;
+    const pageSize = 5;
 
-    const getArticleListSQL = `SELECT article.id,article.title,article.content,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user,article,(SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag,(SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId) AS article_category WHERE article.userId=user.id AND article.id=article_tag.articleId AND article.id=article_category.articleId LIMIT 10 OFFSET ${(ctx.request.query.currentPage - 1) * pageSize};`;
+    const getArticleListSQL = `SELECT article.id,article.title,article.content,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user JOIN article ON user.id = article.userId LEFT JOIN (SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag ON article.id=article_tag.articleId LEFT JOIN (SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId) AS article_category ON article.id=article_category.articleId LIMIT ${pageSize} OFFSET ${(ctx.request.query.currentPage - 1) * pageSize};`;
 
     try {
       var [countResult] = await sequelize.query(getArticleNumberSQL);
-      var totalElements=countResult[0].count
-      var totalPages = Math.ceil(totalElements / 10);
+      var totalElements = countResult[0].count
+      var totalPages = Math.ceil(totalElements / pageSize);
       var currentPage = parseInt(ctx.request.query.currentPage);
       var [articles] = await sequelize.query(getArticleListSQL);
       ctx.status = 200;
@@ -275,10 +277,56 @@ const getArticleList = async (ctx) => {
   }
 };
 
+const getArticleTags = async (ctx) => {
+
+  const getArticleTagsSQL = `SELECT tagname FROM tag GROUP BY tagname`;
+
+  try {
+    var [tags] = await sequelize.query(getArticleTagsSQL);
+    ctx.status = 200;
+    ctx.body = {
+      code: HTTPCODE.SUCCESS,
+      data: {
+        tags: tags.map(tag => tag.tagname),
+      },
+    };
+  } catch (error) {
+    ctx.status = 200;
+    ctx.body = {
+      code: HTTPCODE.DATABASE_FAIL,
+      msg: "数据库操作失败",
+    };
+  }
+}
+
+const getArticleCategorys = async (ctx) => {
+
+  const getArticleCategorysSQL = `SELECT categoryname FROM category GROUP BY categoryname`;
+
+  try {
+    var [categorys] = await sequelize.query(getArticleCategorysSQL);
+    ctx.status = 200;
+    ctx.body = {
+      code: HTTPCODE.SUCCESS,
+      data: {
+        categorys: categorys.map(category => category.categoryname),
+      },
+    };
+  } catch (error) {
+    ctx.status = 200;
+    ctx.body = {
+      code: HTTPCODE.DATABASE_FAIL,
+      msg: "数据库操作失败",
+    };
+  }
+}
+
 module.exports = {
   addArticle,
   editArticle,
   deleteArticle,
   getArticle,
   getArticleList,
+  getArticleTags,
+  getArticleCategorys,
 };

@@ -1,0 +1,48 @@
+//index样式
+:global {
+  .ant-layout-has-sider {
+    height: calc(100vh - 64px - 70px);
+  }
+  .ant-layout-content {
+    padding: 20px;
+    overflow: scroll;
+  }
+}
+
+//MyHeader样式
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .systemName {
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .userInfo {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .loginBtn {
+      color: white;
+    }
+    .userAvatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      background-color: yellow;
+      color: green;
+      font-size: 12px;
+      line-height: 36px;
+      margin-right: 16px;
+    }
+    .userName {
+      font-size: 16px;
+      color: white;
+      margin-right: 4px;
+    }
+  }
+}
