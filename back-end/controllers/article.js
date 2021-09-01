@@ -240,21 +240,26 @@ const getArticle = async (ctx) => {
 const getArticleList = async (ctx) => {
   var schema = Joi.object({
     currentPage: Joi.number().required(),
+    category: Joi.string(),
   });
   var isVerified = paramVerify(ctx, schema);
   if (isVerified) {
     const getArticleNumberSQL = `SELECT COUNT(*) AS count FROM article`;
 
+    const getArticleNumberByCategorySQL = `SELECT COUNT(*) AS count,categoryname FROM article LEFT JOIN category ON article.id=category.articleId WHERE categoryname='${ctx.request.query.category}';`;
+
     const pageSize = 5;
 
     const getArticleListSQL = `SELECT article.id,article.title,article.content,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user JOIN article ON user.id = article.userId LEFT JOIN (SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag ON article.id=article_tag.articleId LEFT JOIN (SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId) AS article_category ON article.id=article_category.articleId LIMIT ${pageSize} OFFSET ${(ctx.request.query.currentPage - 1) * pageSize};`;
 
+    const getArticleListByCategorySQL = `SELECT article.id,article.title,article.content,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user JOIN article ON user.id = article.userId LEFT JOIN (SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag ON article.id=article_tag.articleId JOIN (SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId HAVING categorys LIKE '%${ctx.request.query.category}%') AS article_category ON article.id=article_category.articleId LIMIT ${pageSize} OFFSET ${(ctx.request.query.currentPage - 1) * pageSize};`;
+
     try {
-      var [countResult] = await sequelize.query(getArticleNumberSQL);
+      var [countResult] = await sequelize.query(ctx.request.query.category ? getArticleNumberByCategorySQL : getArticleNumberSQL);
       var totalElements = countResult[0].count
       var totalPages = Math.ceil(totalElements / pageSize);
       var currentPage = parseInt(ctx.request.query.currentPage);
-      var [articles] = await sequelize.query(getArticleListSQL);
+      var [articles] = await sequelize.query(ctx.request.query.category ? getArticleListByCategorySQL : getArticleListSQL);
       ctx.status = 200;
       ctx.body = {
         code: HTTPCODE.SUCCESS,
@@ -279,7 +284,7 @@ const getArticleList = async (ctx) => {
 
 const getArticleTags = async (ctx) => {
 
-  const getArticleTagsSQL = `SELECT tagname FROM tag GROUP BY tagname`;
+  const getArticleTagsSQL = `SELECT tagname,COUNT(*) AS count FROM tag GROUP BY tagname`;
 
   try {
     var [tags] = await sequelize.query(getArticleTagsSQL);
@@ -287,7 +292,12 @@ const getArticleTags = async (ctx) => {
     ctx.body = {
       code: HTTPCODE.SUCCESS,
       data: {
-        tags: tags.map(tag => tag.tagname),
+        tags: tags.map(tag => {
+          return {
+            tagname: tag.tagname,
+            count: tag.count,
+          }
+        }),
       },
     };
   } catch (error) {
@@ -301,7 +311,7 @@ const getArticleTags = async (ctx) => {
 
 const getArticleCategorys = async (ctx) => {
 
-  const getArticleCategorysSQL = `SELECT categoryname FROM category GROUP BY categoryname`;
+  const getArticleCategorysSQL = `SELECT categoryname,COUNT(*) AS count FROM category GROUP BY categoryname`;
 
   try {
     var [categorys] = await sequelize.query(getArticleCategorysSQL);
@@ -309,7 +319,12 @@ const getArticleCategorys = async (ctx) => {
     ctx.body = {
       code: HTTPCODE.SUCCESS,
       data: {
-        categorys: categorys.map(category => category.categoryname),
+        categorys: categorys.map(category => {
+          return {
+            categoryname: category.categoryname,
+            count: category.count,
+          }
+        }),
       },
     };
   } catch (error) {

@@ -1,0 +1,102 @@
+.blogLayoutWrapper {
+  :global {
+    .ant-layout-has-sider {
+      min-height: calc(100vh - 64px - 70px);
+    }
+    .ant-layout-header {
+      background-color: #fff;
+    }
+    .ant-layout-sider {
+      background-color: #f0f2f5;
+    }
+  }
+  //BlogHeader样式
+  .headerWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .systemName {
+      font-size: 20px;
+      font-weight: 800;
+      color: #000;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .userInfo {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .loginBtn {
+        color: #000;
+      }
+      .userAvatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 18px;
+        background-color: #000;
+        color: #fff;
+        font-size: 12px;
+        line-height: 36px;
+        margin-right: 16px;
+      }
+      .userName {
+        font-size: 16px;
+        color: #000;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  //BlogSider样式
+  .blogSiderWrapper{
+    .personalInfo{
+      height: 300px;
+      background-color: #fff;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      .avatar{
+        width: 80px;
+        height: 80px;
+        border-radius: 80px;
+      }
+      .name{
+        font-size: 24px;
+        font-weight: 800;
+        margin-top: 20px;
+      }
+      .introduction,.github{
+        text-align: left;
+        margin-top: 20px;
+        span:first-child{
+          font-weight: 600;
+        }
+      }
+    }
+    .categoryList{
+      min-height: 300px;
+      background-color: #fff;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      .categoryItem{
+        height: 50px;
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dashed black;
+        div:first-child{
+          font-size: 20px;
+          line-height: 50px;
+          cursor: pointer;
+        }
+        div:last-child{
+          font-size: 14px;
+          line-height: 50px;
+        }
+      }
+    }
+  }
+}

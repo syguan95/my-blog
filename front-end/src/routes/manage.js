@@ -7,10 +7,6 @@ const UserList = loadable(() => import("../pages/manage/userList/userList"))
 
 const manageRoute = [
   {
-    path: "/",
-    exact: true,
-    render: () => <Redirect to={"/manage/articleList"} />
-  }, {
     path: "/manage",
     component: ManageLayout,
     routes: [{

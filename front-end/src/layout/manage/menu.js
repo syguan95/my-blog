@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 const { SubMenu } = Menu;
 
-const MyMenu = (props) => {
+const ManageMenu = (props) => {
 
   const history = useHistory();
 
@@ -40,4 +40,4 @@ const MyMenu = (props) => {
     </div>
   )
 }
-export default MyMenu;
+export default ManageMenu;

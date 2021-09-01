@@ -1,0 +1,63 @@
+.articleListWrapper {
+  width: 800px;
+  margin: 20px;
+  line-height: 100%;
+  .articleList {
+    .articleItem {
+      cursor: pointer;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: #fff;
+      height: 300px;
+      border-radius: 10px;
+      .articleInfo {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 30px;
+        .articleTime {
+          margin-right: 20px;
+          line-height: 30px;
+        }
+        .articleCategory {
+          margin-right: 20px;
+        }
+      }
+      .articleTitle {
+        margin: 10px 0;
+        text-align: left;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 20px;
+      }
+      .articleContent {
+        text-align: left;
+        height: 150px;
+        font-size: 14px;
+        line-height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 7;
+        -webkit-box-orient: vertical;
+      }
+      .articleFooter {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 30px;
+        margin-top: 10px;
+        .articleView {
+          span {
+            padding-left: 10px;
+            line-height: 30px;
+          }
+        }
+      }
+    }
+  }
+  .pagination{
+    text-align: right;
+  }
+}

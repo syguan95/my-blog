@@ -1,23 +1,24 @@
 import { Layout } from "antd";
-import MyHeader from "./header.js";
-import MyFooter from "./footer.js";
-import MyMenu from "./menu.js";
+import ManageHeader from "./header.js";
+import ManageFooter from "./footer.js";
+import ManageMenu from "./menu.js";
 import { renderRoutes } from "react-router-config";
+import style from "./style.module.scss";
 
 const { Header, Sider, Content, Footer } = Layout;
 const ManageLayout = (props) => {
   const { route } = props;
   return (
-    <>
+    <div className={style.manageLayoutWrapper}>
       <Layout>
-        <Header><MyHeader /></Header>
+        <Header><ManageHeader /></Header>
         <Layout>
-          <Sider theme="light"><MyMenu /></Sider>
+          <Sider theme="light"><ManageMenu /></Sider>
           <Content>{renderRoutes(route.routes)}</Content>
         </Layout>
-        <Footer><MyFooter /></Footer>
+        <Footer><ManageFooter /></Footer>
       </Layout>
-    </>
+    </div>
   );
 };
 

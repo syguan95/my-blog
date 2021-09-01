@@ -32,9 +32,9 @@ const AddArticle = (props) => {
     try {
       if (id === -1) {
         var tagData = await myAxios.get(API.GET_ARTICLE_TAGS);
-        tags = tagData.tags;
+        tags = tagData.tags.map(tag => tag.tagname);
         var categoryData = await myAxios.get(API.GET_ARTICLE_CATEGORYS);
-        categorys = categoryData.categorys;
+        categorys = categoryData.categorys.map(category => category.categoryname);
       } else {
         var data = await myAxios.get(API.GET_ARTICLE_DETAIL, { articleId: id });
         form.setFieldsValue({
