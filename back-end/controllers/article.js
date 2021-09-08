@@ -154,7 +154,7 @@ const deleteArticle = async (ctx) => {
   if (isVerified) {
     const searchArticleSQL = `SELECT * FROM article WHERE id=${ctx.request.query.articleId};`;
 
-    const deleteArticle = `DELETE FROM article WHERE id=${ctx.request.query.articleId};`;
+    const deleteArticleSQL = `DELETE FROM article WHERE id=${ctx.request.query.articleId};`;
 
     // const deleteTagsSQL = `DELETE FROM tag WHERE articleId=${ctx.request.query.articleId};`;
 
@@ -170,7 +170,7 @@ const deleteArticle = async (ctx) => {
         };
       } else {
         await sequelize.transaction(async (transaction) => {
-          await sequelize.query(deleteArticle, {
+          await sequelize.query(deleteArticleSQL, {
             transaction: transaction,
           });
           //article对应的标签和类别不需要手动删除，定义表关系时设置了cascade

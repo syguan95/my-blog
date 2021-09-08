@@ -13,13 +13,31 @@ fs.readdirSync(__dirname).forEach((file) => {
 });
 
 db.User.hasMany(db.Article, { foreignKey: "userId", onDelete: 'cascade' });
-db.Article.belongsTo(db.User);
+db.Article.belongsTo(db.User, { foreignKey: "userId", onDelete: 'cascade' });
 
 db.Article.hasMany(db.Tag, { foreignKey: "articleId", onDelete: 'cascade' });
-db.Tag.belongsTo(db.Article);
+db.Tag.belongsTo(db.Article, { foreignKey: "articleId", onDelete: 'cascade' });
 
 db.Article.hasMany(db.Category, { foreignKey: "articleId", onDelete: 'cascade' });
-db.Category.belongsTo(db.Article);
+db.Category.belongsTo(db.Article, { foreignKey: "articleId", onDelete: 'cascade' });
+
+db.User.hasMany(db.Comment, { foreignKey: "userId", onDelete: 'cascade' });
+db.Comment.belongsTo(db.User, { foreignKey: "userId", onDelete: 'cascade' });
+
+db.Article.hasMany(db.Comment, { foreignKey: "articleId", onDelete: 'cascade' });
+db.Comment.belongsTo(db.Article, { foreignKey: "articleId", onDelete: 'cascade' });
+
+db.Comment.hasMany(db.Reply, { foreignKey: "commentId", onDelete: 'cascade' });
+db.Reply.belongsTo(db.Comment, { foreignKey: "commentId", onDelete: 'cascade' });
+
+db.User.hasMany(db.Reply, { foreignKey: "fromUserId", onDelete: 'cascade' });
+db.Reply.belongsTo(db.User, { foreignKey: "fromUserId", onDelete: 'cascade' });
+
+db.User.hasMany(db.Reply, { foreignKey: "toUserId", onDelete: 'cascade' });
+db.Reply.belongsTo(db.User, { foreignKey: "toUserId", onDelete: 'cascade' });
+
+db.Reply.hasMany(db.Reply, { foreignKey: "replyId", onDelete: 'cascade' });
+db.Reply.belongsTo(db.Reply, { foreignKey: "replyId", onDelete: 'cascade' });
 
 db.sequelize = sequelize;
 

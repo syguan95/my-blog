@@ -16,6 +16,14 @@ const API = {
     GET_ARTICLE_DETAIL: API_VERSION + "/article",   //获取文章详细内容
     UPDATE_ARTICLE: API_VERSION + "/article",   //更新文章
     DELETE_ARTICLE: API_VERSION + "/article",   //删除文章
+
+    //评论相关接口
+    GET_COMMENT_LIST: API_VERSION + "/comment",  //获取评论列表
+    CREATE_COMMENT: API_VERSION + "/comment",   //新增评论
+    DELETE_COMMENT: API_VERSION + "/comment",   //删除评论
+    GET_REPLY_LIST: API_VERSION + "/reply",  //获取回复列表
+    CREATE_REPLY: API_VERSION + "/reply",   //新增回复
+    DELETE_REPLY: API_VERSION + "/reply",   //删除回复
 }
 
 export default API;

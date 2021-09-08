@@ -56,13 +56,13 @@ const myAxios = {
         } else if (res.data.code === HTTPCODE.UNLOGIN) {
           window.localStorage.removeItem("token")
           store.dispatch(reset());
-          reject(new Error("用户未登录"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.WRONG_PARAM) {
-          reject(new Error("参数错误"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.DATABASE_FAIL) {
-          reject(new Error("数据库操作错误"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.UNAUTHORIZED) {
-          reject(new Error("权限不足"))
+          reject(new Error(res.data.msg))
         }
       }).catch(err => {
         reject(err)
@@ -77,13 +77,13 @@ const myAxios = {
         } else if (res.data.code === HTTPCODE.UNLOGIN) {
           window.localStorage.removeItem("token")
           store.dispatch(reset());
-          reject(new Error("用户未登录"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.WRONG_PARAM) {
-          reject(new Error("参数错误"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.DATABASE_FAIL) {
-          reject(new Error("数据库操作错误"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.UNAUTHORIZED) {
-          reject(new Error("权限不足"))
+          reject(new Error(res.data.msg))
         }
       }).catch(err => {
         reject(err)
@@ -98,13 +98,13 @@ const myAxios = {
         } else if (res.data.code === HTTPCODE.UNLOGIN) {
           window.localStorage.removeItem("token")
           store.dispatch(reset());
-          reject(new Error("用户未登录"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.WRONG_PARAM) {
-          reject(new Error("参数错误"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.DATABASE_FAIL) {
-          reject(new Error("数据库操作错误"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.UNAUTHORIZED) {
-          reject(new Error("权限不足"))
+          reject(new Error(res.data.msg))
         }
       }).catch(err => {
         reject(err)
@@ -119,13 +119,13 @@ const myAxios = {
         } else if (res.data.code === HTTPCODE.UNLOGIN) {
           window.localStorage.removeItem("token")
           store.dispatch(reset());
-          reject(new Error("用户未登录"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.WRONG_PARAM) {
-          reject(new Error("参数错误"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.DATABASE_FAIL) {
-          reject(new Error("数据库操作错误"))
+          reject(new Error(res.data.msg))
         } else if (res.data.code === HTTPCODE.UNAUTHORIZED) {
-          reject(new Error("权限不足"))
+          reject(new Error(res.data.msg))
         }
       }).catch(err => {
         reject(err)

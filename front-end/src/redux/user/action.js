@@ -26,6 +26,7 @@ export const autoLogin = () => async (dispatch) => {
 export const login = (payload) => async (dispatch) => {
   try {
     var data = await myAxios.post(API.LOGIN, payload)
+    message.success("登陆成功")
     window.localStorage.setItem("token", data.token) //登录成功，将token保存在localStorage中
     dispatch({        //将用户信息保存在store中
       type: "LOGIN_SUCCESS",

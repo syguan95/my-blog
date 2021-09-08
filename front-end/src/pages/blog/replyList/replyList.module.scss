@@ -1,0 +1,13 @@
+.replyListWrapper {
+  margin-top: 12px;
+  background: #f7f8fa;
+  border-radius: 2px;
+  .replyListBody{
+    .replyItem{
+      padding: 12px;
+      &:not(:last-child){
+        border-bottom: 1px solid #e5e6eb;
+      }
+    }
+  }
+}

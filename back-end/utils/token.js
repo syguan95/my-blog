@@ -27,6 +27,18 @@ const getOperation = (url, method) => {
     operation = "GET_USER_LIST";
   } else if (url === API_VERSION + "/user/available" && method === "PUT") {
     operation = "UPDATE_USER_AVAILABLE";
+  } else if (url === API_VERSION + "/comment" && method === "GET") {
+    operation = "GET_COMMENT_LIST";
+  } else if (url === API_VERSION + "/comment" && method === "POST") {
+    operation = "ADD_COMMENT";
+  } else if (url === API_VERSION + "/comment" && method === "DELETE") {
+    operation = "DELETE_COMMENT";
+  } else if (url === API_VERSION + "/reply" && method === "GET") {
+    operation = "GET_REPLY_LIST";
+  } else if (url === API_VERSION + "/reply" && method === "POST") {
+    operation = "ADD_REPLY";
+  } else if (url === API_VERSION + "/reply" && method === "DELETE") {
+    operation = "DELETE_REPLY";
   }
   return operation;
 };
