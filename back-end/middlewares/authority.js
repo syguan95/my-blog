@@ -3,7 +3,7 @@ const { HTTPCODE } = require("../config");
 const { AUTHORITY } = require("../config");
 
 module.exports = async (ctx, next) => {
-  if (ctx.request.url.indexOf("register") > -1 || ctx.request.url.indexOf("login") > -1 || ctx.request.url.indexOf("autoLogin") > -1 || ctx.request.url.indexOf("article") > -1 && ctx.request.method === "GET" || ctx.request.url.indexOf("comment") > -1 && ctx.request.method === "GET" || ctx.request.url.indexOf("reply") > -1 && ctx.request.method === "GET") {  //注册接口、登录接口、自动登录接口不需要验证权限
+  if (ctx.request.url.indexOf("register") > -1 || ctx.request.url.indexOf("login") > -1 || ctx.request.url.indexOf("autoLogin") > -1 || ctx.request.url.indexOf("article") > -1 && ctx.request.method === "GET" || ctx.request.url.indexOf("comment") > -1 && ctx.request.method === "GET" || ctx.request.url.indexOf("reply") > -1 && ctx.request.method === "GET") {  //注册接口、登录接口、自动登录接口、获取接口不需要验证权限
     await next();
   } else {
     var token = ctx.request.headers.authorization;

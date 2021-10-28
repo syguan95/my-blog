@@ -20,7 +20,7 @@ const ArticleList = (props) => {
   }, [currentPage])
 
   useEffect(() => {
-    setCurrentPage(1)
+    getArticleByPageNO(1)
   }, [props.match.params.category])
 
   const onPageChange = (page) => {
@@ -59,23 +59,29 @@ const ArticleList = (props) => {
                   <div className={style.articleItem} key={article.id} onClick={() => onArticleItemClicked(article.id)}>
                     <div className={style.articleInfo}>
                       <div className={style.articleTime}>{moment(article.updatedAt).format("YYYY-MM-DD")}</div>
-                      <div className={style.articleCategory}>
-                        {
-                          article.categorys.split(",").map((category, index) => {
-                            return <Tag color={categoryColor} key={index}>{category}</Tag>
-                          })
-                        }
-                      </div>
-                      <div className={style.articleTag}>
-                        {
-                          article.tags.split(",").map((tag, index) => {
-                            return <Tag color={tagColor[index % tagColor.length]} key={index}>{tag}</Tag>
-                          })
-                        }
-                      </div>
+                      {
+                        article.categorys &&
+                        <div className={style.articleCategory}>
+                          {
+                            article.categorys.split(",").map((category, index) => {
+                              return <Tag color={categoryColor} key={index}>{category}</Tag>
+                            })
+                          }
+                        </div>
+                      }
+                      {
+                        article.tags &&
+                        <div className={style.articleTag}>
+                          {
+                            article.tags.split(",").map((tag, index) => {
+                              return <Tag color={tagColor[index % tagColor.length]} key={index}>{tag}</Tag>
+                            })
+                          }
+                        </div>
+                      }
                     </div>
                     <div className={style.articleTitle}>{article.title}</div>
-                    <div className={style.articleContent}>{article.content}</div>
+                    <div className={style.articleAbstract}>{article.abstract}</div>
                     <div className={style.articleFooter}>
                       <div className={style.articleView}>
                         <EyeOutlined /><span>{article.viewCount}</span>

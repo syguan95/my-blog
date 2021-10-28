@@ -1,8 +1,8 @@
-const Sequellize = require("sequelize");
+const Sequelize = require("sequelize");
 const { DATABASE } = require("../config");
 const fs = require("fs");
 
-const sequelize = new Sequellize(DATABASE.dbname, DATABASE.username, DATABASE.password, { ...DATABASE.config });
+const sequelize = new Sequelize(DATABASE.dbname, DATABASE.username, DATABASE.password, { ...DATABASE.config });
 
 const db = {};
 

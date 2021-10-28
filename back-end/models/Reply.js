@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
         autoIncrement: true,
       },
       content: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
     },

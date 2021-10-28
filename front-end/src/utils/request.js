@@ -29,10 +29,8 @@ instance.interceptors.request.use(function (config) {
       "Content-Type": "application/json"
     }
   }
-  if (config.url.indexOf("login") < 0 && config.url.indexOf("register") < 0) {
-    let token = window.localStorage.getItem("token") ? window.localStorage.getItem("token") : ""; //mark
-    config.headers.Authorization = token;
-  }
+  let token = window.localStorage.getItem("token") ? window.localStorage.getItem("token") : ""; //mark
+  config.headers.Authorization = token;
   return config;
 }, function (error) {
   // 对请求错误做些什么

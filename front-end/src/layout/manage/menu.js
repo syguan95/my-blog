@@ -22,7 +22,7 @@ const ManageMenu = (props) => {
         selectedKeys={[].concat(location.pathname)}
         // openKeys={[].concat(location.pathname.indexOf("article") > -1 || location.pathname.indexOf("Article") > -1 ? "article" : "user")}
         mode="inline"
-        theme="ligh"
+        theme="light"
         onSelect={onSelectHandler}
       >
         {

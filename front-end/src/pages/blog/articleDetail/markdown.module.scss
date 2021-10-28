@@ -1,0 +1,147 @@
+.markdownBody{
+  word-break: break-word;
+  line-height: 1.75;
+  font-weight: 400;
+  font-size: 15px;
+  overflow-x: hidden;
+  color: #333;
+  // 标题
+  h1,h2,h3,h4,h5,h6{
+    line-height: 1.5;
+    margin-top: 35px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+  }
+  // 标题（一级标题）
+  h1{
+    font-size: 30px;
+    margin-bottom: 5px;
+  }
+  // 标题（二级标题）
+  h2{
+    padding-bottom: 12px;
+    font-size: 24px;
+    border-bottom: 1px solid #ececec;
+  }
+  // 标题（三级标题）
+  h3{
+    font-size: 18px;
+    padding-bottom: 0;
+  }
+  // 标题（四级标题）
+  h4{
+    font-size: 16px;
+  }
+  // 标题（五级标题）
+  h5{
+    font-size: 15px;
+  }
+  // 标题（六级标题）
+  h6{
+    margin-top: 5px;
+  }
+
+  // 段落
+  p{
+    margin-top: 22px;
+    margin-bottom: 22px;
+  }
+  // 粗体
+  b, strong {
+    font-weight: bolder;
+  }
+  // 斜体
+  em {
+    font-style: italic;
+  }
+
+  // 引用
+  blockquote {
+    color: #666;
+    padding: 1px 23px;
+    margin: 22px 0;
+    border-left: 4px solid #cbcbcb;
+    background-color: #f8f8f8;
+    p {
+      margin: 10px 0;
+    }
+  }
+
+  // 链接
+  a {
+    text-decoration: none;
+    color: #0269c8;
+    border-bottom: 1px solid #d1e9ff;
+  }
+
+  //图片
+  img {
+    max-width: 100%;
+  }
+
+  //代码
+  code, pre {
+    font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+  }
+  code {
+    word-break: break-word;
+    border-radius: 2px;
+    overflow-x: auto;
+    background-color: #fff5f5;
+    color: #ff502c;
+    font-size: .87em;
+    padding: .065em .4em;
+  }
+  pre {
+    overflow: auto;
+    position: relative;
+    line-height: 1.75;
+    color: #333;
+    background: #f8f8f8;
+    code{
+      font-size: 12px;
+      padding: 15px 12px;
+      margin: 0;
+      word-break: normal;
+      display: block;
+      overflow-x: auto;
+      color: #333;
+      background: #f8f8f8;
+    }
+  }
+
+  //列表
+  ol, ul {
+    padding-left: 28px;
+    li {
+      margin-bottom: 0;
+      list-style: inherit;
+    }
+  }
+  ol li {
+    padding-left: 6px;
+  }
+
+  //表格
+  table {
+    display: inline-block!important;
+    font-size: 12px;
+    width: auto;
+    max-width: 100%;
+    overflow: auto;
+    border: 1px solid #f6f6f6;
+    thead {
+      background: #f6f6f6;
+      color: #000;
+      text-align: left;
+    }
+    td, th {
+      padding: 12px 7px;
+      line-height: 24px;
+    }
+    td {
+      min-width: 120px;
+    }
+  }
+
+}

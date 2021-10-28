@@ -1,20 +1,22 @@
 const Router = require("koa-router");
+const config = require("../config/index");
+
 const { addArticle, editArticle, deleteArticle, getArticle, getArticleList, getArticleTags, getArticleCategorys } = require("../controllers/article");
 
 const router = new Router();
 
-router.post("/v1/article", addArticle);
+router.post(config.API_VERSION + "/article", addArticle);
 
-router.put("/v1/article", editArticle);
+router.put(config.API_VERSION + "/article", editArticle);
 
-router.delete("/v1/article", deleteArticle);
+router.delete(config.API_VERSION + "/article", deleteArticle);
 
-router.get("/v1/article", getArticle);
+router.get(config.API_VERSION + "/article", getArticle);
 
-router.get("/v1/articleList", getArticleList);
+router.get(config.API_VERSION + "/articleList", getArticleList);
 
-router.get("/v1/articleTags", getArticleTags);
+router.get(config.API_VERSION + "/articleTags", getArticleTags);
 
-router.get("/v1/articleCategorys", getArticleCategorys);
+router.get(config.API_VERSION + "/articleCategorys", getArticleCategorys);
 
 module.exports = router;

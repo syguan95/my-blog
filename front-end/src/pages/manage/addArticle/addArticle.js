@@ -39,6 +39,7 @@ const AddArticle = (props) => {
         var data = await myAxios.get(API.GET_ARTICLE_DETAIL, { articleId: id });
         form.setFieldsValue({
           title: data.title,
+          abstract: data.abstract,
           content: data.content,
         })
         tags = data.tags;
@@ -103,6 +104,7 @@ const AddArticle = (props) => {
   const onAddArticle = async () => {
     var data = {
       title: form.getFieldValue("title"),
+      abstract: form.getFieldValue("abstract"),
       content: form.getFieldValue("content"),
       tags: tags,
       categorys: categorys,
@@ -210,6 +212,13 @@ const AddArticle = (props) => {
               </Tag>
             )}
           </div>
+        </Form.Item>
+        <Form.Item
+          label="文章摘要"
+          name="abstract"
+          rules={[{ required: true, message: '请输入文章摘要！' }]}
+        >
+          <TextArea placeholder="请输入文章摘要" showCount={true} autoSize={{ minRows: 3, maxRows: 3 }} />
         </Form.Item>
         <Form.Item
           label="文章内容"

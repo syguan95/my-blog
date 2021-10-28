@@ -7,6 +7,7 @@ const moment = require("moment");
 const addArticle = async (ctx) => {
   var schema = Joi.object({
     title: Joi.string().max(50).required(),
+    abstract: Joi.string().required(),
     content: Joi.string().required(),
     tags: Joi.array(),
     categorys: Joi.array(),
@@ -16,7 +17,7 @@ const addArticle = async (ctx) => {
   if (isVerified) {
     const searchArticleSQL = `SELECT title FROM article WHERE title='${ctx.request.body.title}';`;
 
-    const insertArticleSQL = `INSERT INTO article(title,content,viewCount,userId,createdAt,updatedAt) VALUES ('${ctx.request.body.title}','${ctx.request.body.content}',0,${ctx.request.body.userId},'${moment().format("YYYY-MM-DD hh:mm:ss")}','${moment().format("YYYY-MM-DD hh:mm:ss")}');`;
+    const insertArticleSQL = `INSERT INTO article(title,abstract,content,viewCount,userId,createdAt,updatedAt) VALUES ('${ctx.request.body.title}','${ctx.request.body.abstract}','${ctx.request.body.content}',0,${ctx.request.body.userId},'${moment().format("YYYY-MM-DD hh:mm:ss")}','${moment().format("YYYY-MM-DD hh:mm:ss")}');`;
 
     var insertTagsSQL = `INSERT INTO tag(tagname,articleId) VALUES `;
 
@@ -73,6 +74,7 @@ const addArticle = async (ctx) => {
 const editArticle = async (ctx) => {
   var schema = Joi.object({
     title: Joi.string().max(50).required(),
+    abstract: Joi.string().required(),
     content: Joi.string().required(),
     tags: Joi.array(),
     categorys: Joi.array(),
@@ -82,7 +84,7 @@ const editArticle = async (ctx) => {
   if (isVerified) {
     const searchArticleSQL = `SELECT * FROM article WHERE id=${ctx.request.body.articleId};`;
 
-    const updateArticleSQL = `UPDATE article SET title='${ctx.request.body.title}',content='${ctx.request.body.content}',updatedAt='${moment().format("YYYY-MM-DD hh:mm:ss")}' WHERE id=${ctx.request.body.articleId};`;
+    const updateArticleSQL = `UPDATE article SET title='${ctx.request.body.title}',abstract='${ctx.request.body.abstract}',content='${ctx.request.body.content}',updatedAt='${moment().format("YYYY-MM-DD hh:mm:ss")}' WHERE id=${ctx.request.body.articleId};`;
 
     const deleteTagsSQL = `DELETE FROM tag WHERE articleId=${ctx.request.body.articleId};`;
 
@@ -205,7 +207,7 @@ const getArticle = async (ctx) => {
   })
   var isVerified = paramVerify(ctx, schema);
   if (isVerified) {
-    const getArticleSQL = `SELECT article.id,article.title,article.content,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user,article,(SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag,(SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId) AS article_category WHERE article.userId=user.id AND article.id=article_tag.articleId AND article.id=article_category.articleId AND article.id=${ctx.request.query.articleId};`
+    const getArticleSQL = `SELECT article.id,article.title,article.abstract,article.content,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user,article,(SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag,(SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId) AS article_category WHERE article.userId=user.id AND article.id=article_tag.articleId AND article.id=article_category.articleId AND article.id=${ctx.request.query.articleId};`
 
     try {
       var [result] = await sequelize.query(getArticleSQL)
@@ -250,9 +252,9 @@ const getArticleList = async (ctx) => {
 
     const pageSize = 5;
 
-    const getArticleListSQL = `SELECT article.id,article.title,article.content,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user JOIN article ON user.id = article.userId LEFT JOIN (SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag ON article.id=article_tag.articleId LEFT JOIN (SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId) AS article_category ON article.id=article_category.articleId LIMIT ${pageSize} OFFSET ${(ctx.request.query.currentPage - 1) * pageSize};`;
+    const getArticleListSQL = `SELECT article.id,article.title,article.abstract,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user JOIN article ON user.id = article.userId LEFT JOIN (SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag ON article.id=article_tag.articleId LEFT JOIN (SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId) AS article_category ON article.id=article_category.articleId LIMIT ${pageSize} OFFSET ${(ctx.request.query.currentPage - 1) * pageSize};`;
 
-    const getArticleListByCategorySQL = `SELECT article.id,article.title,article.content,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user JOIN article ON user.id = article.userId LEFT JOIN (SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag ON article.id=article_tag.articleId JOIN (SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId HAVING categorys LIKE '%${ctx.request.query.category}%') AS article_category ON article.id=article_category.articleId LIMIT ${pageSize} OFFSET ${(ctx.request.query.currentPage - 1) * pageSize};`;
+    const getArticleListByCategorySQL = `SELECT article.id,article.title,article.abstract,article.viewCount,article.createdAt,article.updatedAt,user.username,article_tag.tags,article_category.categorys FROM user JOIN article ON user.id = article.userId LEFT JOIN (SELECT articleId,GROUP_CONCAT(tagname) AS tags FROM tag GROUP BY articleId) AS article_tag ON article.id=article_tag.articleId JOIN (SELECT articleId,GROUP_CONCAT(categoryname) AS categorys FROM category GROUP BY articleId HAVING categorys LIKE '%${ctx.request.query.category}%') AS article_category ON article.id=article_category.articleId LIMIT ${pageSize} OFFSET ${(ctx.request.query.currentPage - 1) * pageSize};`;
 
     try {
       var [countResult] = await sequelize.query(ctx.request.query.category ? getArticleNumberByCategorySQL : getArticleNumberSQL);

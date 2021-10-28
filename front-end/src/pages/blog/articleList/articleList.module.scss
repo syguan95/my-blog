@@ -9,7 +9,7 @@
       margin-bottom: 20px;
       padding: 20px;
       background-color: #fff;
-      height: 300px;
+      // height: 300px;
       border-radius: 10px;
       .articleInfo {
         display: flex;
@@ -31,16 +31,13 @@
         font-weight: 800;
         line-height: 20px;
       }
-      .articleContent {
+      .articleAbstract {
         text-align: left;
-        height: 150px;
         font-size: 14px;
         line-height: 22px;
         overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 7;
-        -webkit-box-orient: vertical;
+        text-overflow:ellipsis;
+        white-space: nowrap;
       }
       .articleFooter {
         display: flex;
